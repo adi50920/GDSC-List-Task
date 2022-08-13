@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+
+    <title>upload and rate</title>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+</head>
+<body>
+<section class="nav-bar">
+<nav>
+
+    <div class="nav-links" id="navLinks">
+        <ul>
+            <li><a href="index.html">UPLOAD</a></li>
+            <li> <a href="rate.html">RATE</a></li>
+            
+        </ul>
+    </div>
+</nav>
+</section>
+
+<section class="ideas">
+        
+
+            <ul id="ideas-col">
+              
+
+            </ul>                                    
+        
+</section>
+
+<script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-analytics.js";
+ 
+  const firebaseConfig = {
+    apiKey: "AIzaSyCnl39sIGVwt9x3sKM65Px1nwid2nu3gWg",
+    authDomain: "upload-and-list.firebaseapp.com",
+    projectId: "upload-and-list",
+    storageBucket: "upload-and-list.appspot.com",
+    messagingSenderId: "399080346652",
+    appId: "1:399080346652:web:313028d345f7786d35fbd9",
+    measurementId: "G-FSKTLF98E3"
+  };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    import{getDatabase, ref, set,onValue, child, update, remove} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js"
+
+    const db=getDatabase();
+    var ideaNo=0;
+    function addItemToList(name,desc,linkofmap){
+        var list=document.getElementById('ideas-col')
+        var _name=document.createElement('h3');
+        var _description=document.createElement('p');
+        var _link=document.createElement('p');
+
+        _name.innerHTML=name;
+        _description.innerHTML=desc;
+        _link.innerHTML=linkofmap;
+
+        list.appendChild(_name);
+        list.appendChild(_description);
+        list.appendChild(_link);
+ 
+        
+
+
+
+    }
+    // function FetchAllData() {
+    //     firebase.database().ref('Ideas').once('value',function(snapshot){
+    //         snapshot.forEach(
+    //             function(ChildSnapshot){
+    //                 let name=ChildSnapshot.val().NameOfUser;
+    //                 let desc=ChildSnapshot.val().DescriptionOfIdea;
+    //                 let linkofmap=ChildSnapshot.val().MindMapLink;
+    //                 addItemToList(name,des,linkofmap);
+
+    //             }
+    //         )
+    //     })
+    // }
+
+const data = getDatabase();
+const dbRef = ref(data, 'Ideas');
+
+onValue(dbRef, (snapshot) => {
+  snapshot.forEach((childSnapshot) => {
+    const name = childSnapshot.val().NameOfUser;
+    const desc = childSnapshot.val().DescriptionOfIdea;
+    const linkofmap=childSnapshot.val().MindMapLink;
+    addItemToList(name,desc,linkofmap);
+  });
+}, {
+  onlyOnce: true
+});
+// window.onload();
+</script> 
+</body>
+</html>
