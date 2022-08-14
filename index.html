@@ -1,82 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="index.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <title>upload and rate</title>
-</head>
-<body>
-<nav>
-<section class="nav-bar">
+  </head>
+  <body>
+    <nav>
+      <section class="nav-bar">
+        <div class="nav-links" id="navLinks">
+          <ul>
+            <li class="active"><a  href="index.html">UPLOAD</a></li>
+            <li><a href="rate.html">RATE</a></li>
+          </ul>
+        </div>
+      </section>
+    </nav>
+    <section class="upload">
+      <div class="upload-col">
+        <form>
+          <input
+            type="text"
+            placeholder="Enter your name"
+            name="name"
+            id="name"
+            required
+          />
+          <textarea
+            rows="8"
+            placeholder="Description"
+            name="description"
+            id="description"
+            required
+          ></textarea>
+          <input
+            type="URL"
+            placeholder="Enter Mind map Link"
+            name="link"
+            id="link"
+            required
+          />
+          <button id="submit" type="submit" class="hero-btn">Upload</button>
+        </form>
+      </div>
+    </section>
 
-    <div class="nav-links" id="navLinks">
-        <ul>
-            <li><a href="index.html">UPLOAD</a></li>
-            <li> <a href="rate.html">RATE</a></li>
-            
-        </ul>
-    </div>
-</nav>
-</section>
-<section class="upload">
-    <div class="upload-col">
-            <input type="text" placeholder="Enter your name" name="name" id="name" required>
-            <textarea rows="8" placeholder="Description" name="description" id="description" required></textarea>
-            <input type="URL" placeholder="Enter Mind map Link" name="link" id="link" required>
-            <button id="submit" class="hero-btn red-btn">Upload</button>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-analytics.js";
 
-    </div>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCnl39sIGVwt9x3sKM65Px1nwid2nu3gWg",
+        authDomain: "upload-and-list.firebaseapp.com",
+        projectId: "upload-and-list",
+        storageBucket: "upload-and-list.appspot.com",
+        messagingSenderId: "399080346652",
+        appId: "1:399080346652:web:313028d345f7786d35fbd9",
+        measurementId: "G-FSKTLF98E3",
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      import {
+        getDatabase,
+        ref,
+        set,
+        child,
+        update,
+        remove,
+      } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js";
 
-</section>
+      const db = getDatabase();
+      // references
+      var namebox = document.getElementById("name");
+      var descriptionbox = document.getElementById("description");
+      var urlbox = document.getElementById("link");
 
-<script type="module">
+      var insBtn = document.getElementById("submit");
 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-analytics.js";
+      // submit
+      function InsertData() {
+        if(namebox.value.trim()==="" || descriptionbox.value.trim()==="" || urlbox.value.trim()==="" ){
+            alert("input fields are empty")
+        }
+        else{
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCnl39sIGVwt9x3sKM65Px1nwid2nu3gWg",
-    authDomain: "upload-and-list.firebaseapp.com",
-    projectId: "upload-and-list",
-    storageBucket: "upload-and-list.appspot.com",
-    messagingSenderId: "399080346652",
-    appId: "1:399080346652:web:313028d345f7786d35fbd9",
-    measurementId: "G-FSKTLF98E3"
-  };
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    import{getDatabase, ref, set, child, update, remove} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js"
+            set(ref(db, "Ideas/" + namebox.value), {
+                NameOfUser: namebox.value,
+                DescriptionOfIdea: descriptionbox.value,
+                MindMapLink: urlbox.value,
+            })
+            .then(() => {
+                alert("Idea has been recorded");
+            })
+            .catch((error) => {
+                alert("Idea was not recorded,error" + error);
+            });
+        }
+      }
 
-    const db=getDatabase();
-    // references
-    var namebox=document.getElementById("name");
-    var descriptionbox=document.getElementById("description");
-    var urlbox=document.getElementById("link");
-
-    var insBtn=document.getElementById("submit");
-
-    // submit
-    function InsertData(){
-        set(ref(db,"Ideas/"+ namebox.value),{
-            NameOfUser:namebox.value,
-            DescriptionOfIdea:descriptionbox.value,
-            MindMapLink:urlbox.value
-        })
-        .then(()=>{
-            alert("Idea has been recorded");
-    })
-        .catch((error)=>{
-            alert("Idea was not recorded,error"+error);
-        });
-    }
-
-    insBtn.addEventListener('click',InsertData);
-  </script> 
-    
-</body>
+      insBtn.addEventListener("click", InsertData);
+    </script>
+  </body>
 </html>

@@ -18,7 +18,7 @@
     <div class="nav-links" id="navLinks">
         <ul>
             <li><a href="index.html">UPLOAD</a></li>
-            <li> <a href="rate.html">RATE</a></li>
+            <li class="active"> <a href="rate.html">RATE</a></li>
             
         </ul>
     </div>
@@ -28,8 +28,7 @@
 <section class="ideas">
         
 
-            <ul id="ideas-col">
-              
+            <ul id="ideas-col" class="my-2">
 
             </ul>                                    
         
@@ -76,19 +75,6 @@
 
 
     }
-    // function FetchAllData() {
-    //     firebase.database().ref('Ideas').once('value',function(snapshot){
-    //         snapshot.forEach(
-    //             function(ChildSnapshot){
-    //                 let name=ChildSnapshot.val().NameOfUser;
-    //                 let desc=ChildSnapshot.val().DescriptionOfIdea;
-    //                 let linkofmap=ChildSnapshot.val().MindMapLink;
-    //                 addItemToList(name,des,linkofmap);
-
-    //             }
-    //         )
-    //     })
-    // }
 
 const data = getDatabase();
 const dbRef = ref(data, 'Ideas');
@@ -103,7 +89,6 @@ onValue(dbRef, (snapshot) => {
 }, {
   onlyOnce: true
 });
-// window.onload();
 </script> 
 </body>
 </html>

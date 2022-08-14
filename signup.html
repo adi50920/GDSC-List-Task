@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <!-- <link rel="stylesheet" href="index.css"> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-auth-compat.js"></script> -->
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="center">
+        <h1>SignUp</h1>
+        <form method="post">
+            <div class="txt_field">
+            <input id="email" type="text" required>
+            <span></span>
+            <label >Enter any Email ID/Username</label>
+            </div>        
+    </form>
+        <form method="post">
+            <div class="txt_field">
+            <input id="password" type="password" required>
+            <span></span>
+            <label >Create a Password</label>
+            </div>     
+            <button onclick="signUp()" id="signup" class="hero1-btn red1-btn">SignUp
+            </button>
+    </form>
+    </div>
+    <!-- <script>
+        const firebaseApp = firebase.initializeApp({   
+        apiKey: "AIzaSyCnl39sIGVwt9x3sKM65Px1nwid2nu3gWg",
+        authDomain: "upload-and-list.firebaseapp.com",
+        databaseURL: "https://upload-and-list-default-rtdb.firebaseio.com",
+        projectId: "upload-and-list",
+        storageBucket: "upload-and-list.appspot.com",
+        messagingSenderId: "399080346652",
+        appId: "1:399080346652:web:313028d345f7786d35fbd9",
+        measurementId: "G-FSKTLF98E3" });
+        const db = firebaseApp.firestore();
+        const auth = firebaseApp.auth();
+
+        const signUp=()=>{
+            const email=document.getElementById("email").value;
+            const passsword=document.getElementById("password").value;
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then((result) => {
+    // Signed in 
+alert("You are Signed Up")
+    // ...
+  })
+  .catch((error) => {
+alert(error)
+  });
+        }
+     </script> -->
+     <script>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-analytics.js";
+
+//   const firebaseConfig = {
+//     apiKey: "AIzaSyCnl39sIGVwt9x3sKM65Px1nwid2nu3gWg",
+//     authDomain: "upload-and-list.firebaseapp.com",
+//     databaseURL: "https://upload-and-list-default-rtdb.firebaseio.com",
+//     projectId: "upload-and-list",
+//     storageBucket: "upload-and-list.appspot.com",
+//     messagingSenderId: "399080346652",
+//     appId: "1:399080346652:web:313028d345f7786d35fbd9",
+//     measurementId: "G-FSKTLF98E3"
+//   };
+
+  // Initialize Firebase
+//   const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCnl39sIGVwt9x3sKM65Px1nwid2nu3gWg",
+    authDomain: "upload-and-list.firebaseapp.com",
+    databaseURL: "https://upload-and-list-default-rtdb.firebaseio.com",
+    projectId: "upload-and-list",
+    storageBucket: "upload-and-list.appspot.com",
+    messagingSenderId: "399080346652",
+    appId: "1:399080346652:web:313028d345f7786d35fbd9",
+    measurementId: "G-FSKTLF98E3"
+ 
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
+
+  
+         import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+         function signUp(){
+
+             const auth = getAuth();
+             const email=document.getElementById("email").value;
+             const passsword=document.getElementById("password").value;
+             createUserWithEmailAndPassword(auth, email, password)
+             .then((userCredential) => {
+                console.log(userCredential);
+                 
+                //  const user = userCredential.user;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage);
+                });
+            }
+            </script>
+</body>
+</html>
